@@ -14,3 +14,5 @@ algo.o : algo.c
 graphe.o : graphe.c
 	$(CC) $(CFLAGS) -c graphe.c -o graphe.o
 
+clean :
+	rm -f *.o
