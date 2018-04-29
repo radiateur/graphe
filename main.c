@@ -2,7 +2,7 @@
 #include "algo.h"
 
 int main(){
-  char nom[] = "graphe1.txt";
+  char nom[] = "grapheColorado.csv";
   GRAPHE G;
   T_SOMMET d, a;
   /*d.nom = calloc(1, 4*sizeof(char));
@@ -11,10 +11,10 @@ int main(){
   a.nom = "Haa";*/
   
   G = ouvrirGraphe(nom);
-  afficherGraphe(G);
+  //afficherGraphe(G);
   d = G.sommets[0];
-  a = G.sommets[7];
-  //plusCourtChemin(G, d, a);
+  a = G.sommets[3];
+  plusCourtChemin(G, d, a);
   
   return 0;
 }
