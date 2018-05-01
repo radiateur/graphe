@@ -12,8 +12,9 @@ int main(){
   
   G = ouvrirGraphe(nom);
   //afficherGraphe(G);
-  d = G.sommets[0];
-  a = G.sommets[3];
+  d = G.sommets[5];
+  a = G.sommets[10000];
+  printf("mais pk ?\n");
   plusCourtChemin(G, d, a);
   
   return 0;

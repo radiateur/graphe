@@ -77,16 +77,26 @@ L_ARC plusCourtChemin(GRAPHE G, T_SOMMET d, T_SOMMET a){
   int taille = G.n;
   int d_int;
   int a_int;
-  double pcc[taille];
-  int pere[taille];
+  //double pcc[taille];
+  double *pcc;
+  pcc = calloc(taille, sizeof(*pcc));
+  //int pere[taille];
+  int *pere;
+  pere = calloc(taille, sizeof(*pere));
+  /*
   long int C[taille];//On représente les sommets par leurs positions
   long int S[taille];
+  */
+  long int *C;
+  long int *S;
+  C = calloc(taille, sizeof(*C));//en pratique un seul tableau necessaire et de int de surcroit !
+  S = calloc(taille, sizeof(*C));
   int i,j,k;
   double cout;
   printf("zouuuu\n");
   for(i=0; i<taille; ++i){
-    printf("truc\n");
-    printf("%d\n", i);
+    //printf("truc\n");
+    //printf("%d\n", i);
     C[i] = i;
     S[i] = -1;
     pcc[i] = DBL_MAX;
@@ -98,16 +108,16 @@ L_ARC plusCourtChemin(GRAPHE G, T_SOMMET d, T_SOMMET a){
   printf("D_INT A_INT: %d %d\n", d_int, a_int);
   pcc[d_int] = 0;  
   do{
-    printf("là !\n");
+    //printf("là !\n");
     j = minimum(pcc, C, taille); 
-    printf("%d \n", j);
+    //printf("%d \n", j);
     C[j] = -1;
     S[j] = j;
-    printf("et là !\n");
+    //printf("et là !\n");
     L_ARC p;
     p = G.sommets[j].voisins;
     while(!LArcEstVide(p)){
-      printf("coince ici !\n");
+      //printf("coince ici !\n");
       k = p->val.arrivee;
       cout = p->val.cout;
       if (pcc[k] > pcc[j] + cout){
