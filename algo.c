@@ -41,7 +41,12 @@ int minimum(double *pcc, long int *C, int n){
       }
     }
   }
-  return indice_m;
+  if(indice_m == -1){
+    fprintf(stderr, "Erreur de minimum, liste vide ou chemin inexistant");
+  }
+  else{
+    return indice_m;
+  }
 }
 int chercherSommet(T_SOMMET x, GRAPHE G){
   int i;
@@ -49,7 +54,7 @@ int chercherSommet(T_SOMMET x, GRAPHE G){
   strcpy(nom, x.nom);
   int taille = G.n;
   for(i=0; i<taille; ++i){
-    printf("%s %s\n", G.sommets[i].nom, nom);
+    //printf("%s %s\n", G.sommets[i].nom, nom);
     if (!strcmp(G.sommets[i].nom, nom))
       return i;
   }
@@ -77,23 +82,29 @@ L_ARC plusCourtChemin(GRAPHE G, T_SOMMET d, T_SOMMET a){
   int taille = G.n;
   int d_int;
   int a_int;
-  //double pcc[taille];
-  double *pcc;
+  double *pcc = NULL;
   pcc = calloc(taille, sizeof(*pcc));
-  //int pere[taille];
-  int *pere;
+  if (pcc==NULL) {
+      fprintf(stderr, "Erreur fatale, mémoire insuffisante pour pcc");
+      exit(1);
+    }
+  int *pere = NULL;
   pere = calloc(taille, sizeof(*pere));
-  /*
-  long int C[taille];//On représente les sommets par leurs positions
-  long int S[taille];
-  */
-  long int *C;
-  long int *S;
+  if (pere==NULL) {
+      fprintf(stderr, "Erreur fatale, mémoire insuffisante pere");
+      exit(1);
+    }
+  long int *C = NULL;
+  long int *S = NULL;
   C = calloc(taille, sizeof(*C));//en pratique un seul tableau necessaire et de int de surcroit !
   S = calloc(taille, sizeof(*C));
+  if (C==NULL) {
+      fprintf(stderr, "Erreur fatale, mémoire insuffisante");
+      exit(1);
+    }
   int i,j,k;
   double cout;
-  printf("zouuuu\n");
+  //printf("zouuuu\n");
   for(i=0; i<taille; ++i){
     //printf("truc\n");
     //printf("%d\n", i);
@@ -102,10 +113,10 @@ L_ARC plusCourtChemin(GRAPHE G, T_SOMMET d, T_SOMMET a){
     pcc[i] = DBL_MAX;
     pere[i] = -1;
   }
-  printf("ici !\n");
+  //printf("ici !\n");
   d_int = chercherSommet(d, G);
   a_int = chercherSommet(a, G);
-  printf("D_INT A_INT: %d %d\n", d_int, a_int);
+  //printf("D_INT A_INT: %d %d\n", d_int, a_int);
   pcc[d_int] = 0;  
   do{
     //printf("là !\n");
@@ -127,9 +138,13 @@ L_ARC plusCourtChemin(GRAPHE G, T_SOMMET d, T_SOMMET a){
       p = p->suiv;
     }
   }while(!appartient(S, a_int) && pcc[j] != DBL_MAX);
-  
+    
   while(a_int != d_int){
     printf("%d\n", pere[a_int]);
     a_int = pere[a_int];
   }
+  free(pcc);
+  free(pere);
+  free(C);
+  free(S);
 }

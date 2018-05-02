@@ -1,3 +1,4 @@
+
 #ifndef G_HEADERS
 #define G_HEADERS
 #include <stdio.h>
@@ -37,4 +38,5 @@ GRAPHE ouvrirGraphe(char *nom);
 L_ARC plusCourtChemin(GRAPHE , T_SOMMET , T_SOMMET );
 void afficherGraphe(GRAPHE G);
 int appartient(long int *S, int a);
+void libererGraphe(GRAPHE G);
 #endif

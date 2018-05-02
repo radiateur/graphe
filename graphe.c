@@ -25,7 +25,7 @@ GRAPHE ouvrirGraphe(char *nom){
   FILE *fichier_graphe = fopen(nom, "r");
   if (fichier_graphe == NULL){
     fprintf(stderr, "Ouverture du fichier impossible");
-  } //compiler avec clang + MakeFile ! + plusieurs fichiers algo.c graphe.c main.c
+  } //compiler avec clang + MakeFile ! + plusieurs fichiers algo.c graphe.c main.c ++ run valgrind pour voir les memory leaks
   int nb_sommets;
   int nb_arcs;
   int i;
@@ -76,6 +76,7 @@ GRAPHE ouvrirGraphe(char *nom){
     
     /* /!\ CODE A FACTORISER ! /!\ */    
   }
+  fclose(fichier_graphe); //Libérer la mémoire !
   return G;
 }
 
@@ -95,4 +96,26 @@ void afficherGraphe(GRAPHE G){
   }
 }
 
+L_ARC supprimerTete(L_ARC l){
+  if (LArcEstVide(l)){return NULL;}
+  else {
+    L_ARC p;
+    p=l->suiv;
+    free(l);
+    return p;
+  }
+}
 
+void libererGraphe(GRAPHE G){
+  int i;
+  L_ARC p;
+  for(i=0; i<G.n; ++i){
+    printf("%d\n",i);
+    free(G.sommets[i].nom);
+    for(p=G.sommets[i].voisins;!LArcEstVide(p);p=p->suiv){
+      supprimerTete(p);
+    }
+  }
+  free(G.sommets);
+}
+  
